@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import axios from 'axios';
+import api from '../../api';
 import { Rocket, Loader2 } from 'lucide-react';
 
 const Login = () => {
@@ -15,7 +15,7 @@ const Login = () => {
     setError('');
     
     try {
-      const res = await axios.post('http://localhost:5000/api/auth/login', { username, password });
+      const res = await api.post('/auth/login', { username, password });
       localStorage.setItem('token', res.data.token);
       localStorage.setItem('user', JSON.stringify(res.data.user));
       navigate('/crm/dashboard');
@@ -27,8 +27,8 @@ const Login = () => {
   const loadDemo = async () => {
     setLoading(true);
     try {
-      await axios.get('http://localhost:5000/api/seed');
-      const res = await axios.post('http://localhost:5000/api/auth/login', { username: 'demo_rep', password: 'demo123' });
+      await api.get('/seed');
+      const res = await api.post('/auth/login', { username: 'demo_rep', password: 'demo123' });
       localStorage.setItem('token', res.data.token);
       localStorage.setItem('user', JSON.stringify(res.data.user));
       navigate('/crm/dashboard');

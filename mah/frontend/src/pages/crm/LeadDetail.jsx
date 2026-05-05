@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '../../../api';
 import moment from 'moment';
 import { ArrowLeft, ExternalLink, Mail, Send, Loader2, RefreshCw, CheckCircle2 } from 'lucide-react';
 import ActivityTimeline from '../../components/ActivityTimeline';
@@ -24,7 +24,7 @@ const LeadDetail = () => {
       // In a real app we might fetch just one lead, but here we can just reuse the leads list API or create a route
       // Wait, there's no GET /leads/:id route specified in the prompt!
       // But we can just fetch all and filter by ID
-      const res = await axios.get('http://localhost:5000/api/crm/leads', {
+      const res = await api.get('/crm/leads', {
         headers: { Authorization: `Bearer ${token}` }
       });
       const foundLead = res.data.find(l => l._id === id);
